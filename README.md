@@ -20,6 +20,14 @@ Google Cloud Platform workflows and best practices:
 - Project configuration
 - Environment-specific deployments
 
+### github-issues
+GitHub Issues workflow for restricted environments (e.g., Claude Code Web):
+- Read issue content without GH CLI
+- Add comments to issues programmatically
+- Python stdlib-only implementation (no dependencies)
+- Works with Claude Code Web's automatic branch creation
+- Authentication via `gh auth token` or `GITHUB_TOKEN`
+
 ## Usage
 
 ### As Git Submodule
