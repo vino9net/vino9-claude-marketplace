@@ -18,10 +18,7 @@ def get_github_token() -> str:
     # Try gh CLI first
     try:
         result = subprocess.run(
-            ["gh", "auth", "token"],
-            capture_output=True,
-            text=True,
-            check=True
+            ["gh", "auth", "token"], capture_output=True, text=True, check=True
         )
         token = result.stdout.strip()
         if token:
@@ -33,7 +30,10 @@ def get_github_token() -> str:
     token = os.environ.get("GITHUB_TOKEN", "")
     if not token:
         print("Error: No GitHub token found.", file=sys.stderr)
-        print("Either install gh CLI and run 'gh auth login', or set GITHUB_TOKEN env var.", file=sys.stderr)
+        print(
+            "Either install gh CLI and run 'gh auth login', or set GITHUB_TOKEN env var.",
+            file=sys.stderr,
+        )
         sys.exit(1)
 
     return token
@@ -46,7 +46,7 @@ def get_repo_info() -> tuple[str, str]:
             ["git", "remote", "get-url", "origin"],
             capture_output=True,
             text=True,
-            check=True
+            check=True,
         )
         remote_url = result.stdout.strip()
 
@@ -63,18 +63,33 @@ def get_repo_info() -> tuple[str, str]:
                 path = remote_url.split("/git/", 1)[1]
                 parts = path.replace(".git", "").split("/")
             else:
-                print(f"Error: Unable to parse Claude Code Web proxy URL: {remote_url}", file=sys.stderr)
+                print(
+                    f"Error: Unable to parse Claude Code Web proxy URL: {remote_url}",
+                    file=sys.stderr,
+                )
                 sys.exit(1)
         elif remote_url.startswith("https://github.com/"):
-            parts = remote_url.replace("https://github.com/", "").replace(".git", "").split("/")
+            parts = (
+                remote_url.replace("https://github.com/", "")
+                .replace(".git", "")
+                .split("/")
+            )
         elif remote_url.startswith("git@github.com:"):
-            parts = remote_url.replace("git@github.com:", "").replace(".git", "").split("/")
+            parts = (
+                remote_url.replace("git@github.com:", "").replace(".git", "").split("/")
+            )
         else:
-            print(f"Error: Unable to parse GitHub remote URL: {remote_url}", file=sys.stderr)
+            print(
+                f"Error: Unable to parse GitHub remote URL: {remote_url}",
+                file=sys.stderr,
+            )
             sys.exit(1)
 
         if len(parts) != 2:
-            print(f"Error: Invalid GitHub remote URL format: {remote_url}", file=sys.stderr)
+            print(
+                f"Error: Invalid GitHub remote URL format: {remote_url}",
+                file=sys.stderr,
+            )
             sys.exit(1)
 
         return parts[0], parts[1]
@@ -85,10 +100,7 @@ def get_repo_info() -> tuple[str, str]:
 
 
 def github_api_request(
-    token: str,
-    endpoint: str,
-    method: str = "GET",
-    data: dict[str, Any] | None = None
+    token: str, endpoint: str, method: str = "GET", data: dict[str, Any] | None = None
 ) -> Any:
     """Make a request to GitHub API."""
     url = f"https://api.github.com{endpoint}"
@@ -96,7 +108,7 @@ def github_api_request(
     headers = {
         "Accept": "application/vnd.github+json",
         "Authorization": f"Bearer {token}",
-        "X-GitHub-Api-Version": "2022-11-28"
+        "X-GitHub-Api-Version": "2022-11-28",
     }
 
     request_data = None
@@ -122,14 +134,18 @@ def get_issue(token: str, owner: str, repo: str, issue_number: int) -> dict[str,
     return github_api_request(token, endpoint)
 
 
-def add_comment(token: str, owner: str, repo: str, issue_number: int, comment: str) -> dict[str, Any]:
+def add_comment(
+    token: str, owner: str, repo: str, issue_number: int, comment: str
+) -> dict[str, Any]:
     """Add a comment to a GitHub issue."""
     endpoint = f"/repos/{owner}/{repo}/issues/{issue_number}/comments"
     data = {"body": comment}
     return github_api_request(token, endpoint, method="POST", data=data)
 
 
-def list_comments(token: str, owner: str, repo: str, issue_number: int) -> list[dict[str, Any]]:
+def list_comments(
+    token: str, owner: str, repo: str, issue_number: int
+) -> list[dict[str, Any]]:
     """List comments on a GitHub issue."""
     endpoint = f"/repos/{owner}/{repo}/issues/{issue_number}/comments"
     return github_api_request(token, endpoint)
@@ -162,9 +178,18 @@ def format_issue(issue: dict[str, Any]) -> str:
 def main():
     if len(sys.argv) < 2:
         print("Usage:", file=sys.stderr)
-        print("  gh_issue.py get <issue_number>           - Get issue details", file=sys.stderr)
-        print("  gh_issue.py comment <issue_number> <msg> - Add comment to issue", file=sys.stderr)
-        print("  gh_issue.py comments <issue_number>      - List issue comments", file=sys.stderr)
+        print(
+            "  gh_issue.py get <issue_number>           - Get issue details",
+            file=sys.stderr,
+        )
+        print(
+            "  gh_issue.py comment <issue_number> <msg> - Add comment to issue",
+            file=sys.stderr,
+        )
+        print(
+            "  gh_issue.py comments <issue_number>      - List issue comments",
+            file=sys.stderr,
+        )
         sys.exit(1)
 
     command = sys.argv[1]
@@ -184,7 +209,10 @@ def main():
 
     elif command == "comment":
         if len(sys.argv) != 4:
-            print("Error: comment command requires issue number and message", file=sys.stderr)
+            print(
+                "Error: comment command requires issue number and message",
+                file=sys.stderr,
+            )
             sys.exit(1)
 
         issue_number = int(sys.argv[2])
