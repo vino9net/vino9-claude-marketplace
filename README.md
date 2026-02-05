@@ -1,73 +1,44 @@
-# Shared Claude Code Skills
+# Claude Code Skills Marketplace
 
-This repository contains reusable Claude Code skills for Python development and Google Cloud Platform workflows.
+A collection of reusable plugins for AI coding tools.
 
-## Skills Included
+## TL;DR
 
-### python-dev
-Python development standards and best practices using modern tooling:
-- **ruff** for linting and formatting
-- **ty** for type checking
-- **uv** for package management
-- Modern Python 3.10+ type annotations
-- Pre-commit quality gates
+Add this to your `~/.claude/settings.json` (or project `.claude/settings.json`):
 
-### google-cloud
-Google Cloud Platform workflows and best practices:
-- Cloud Run deployments
-- Cloud Storage management
-- Authentication and IAM
-- Project configuration
-- Environment-specific deployments
-
-### github-issues
-GitHub Issues workflow for restricted environments (e.g., Claude Code Web):
-- Read issue content without GH CLI
-- Add comments to issues programmatically
-- Python stdlib-only implementation (no dependencies)
-- Works with Claude Code Web's automatic branch creation
-- Authentication via `gh auth token` or `GITHUB_TOKEN`
-
-## Usage
-
-### As Git Submodule
-
-Add to your project:
-```bash
-git submodule add https://github.com/vino9net/claude-shared-skills.git .claude/skills/shared
-git commit -m "Add shared Claude skills"
+```json
+{
+  "extraKnownMarketplaces": {
+    "vino9": {
+      "source": {
+        "source": "git",
+        "url": "https://github.com/vino9net/vino9-claude-marketplace.git"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "boot-gcp-vm@vino9": true,
+    "github-issues@vino9": true,
+    "python-dev@vino9": true
+  }
+}
 ```
 
-Update to latest:
-```bash
-git submodule update --remote .claude/skills/shared
-```
+## Available Plugins
 
-### Skills Format
+| Plugin | Source | Description |
+|--------|--------|-------------|
+| [boot-gcp-vm](plugins/boot-gcp-vm/) | local | Start a GCP VM and update local SSH config with its new IP address |
+| [github-issues](plugins/github-issues/) | local | Read and comment on GitHub issues in Claude Code Web (where gh CLI doesn't work) |
+| [python-dev](https://github.com/vino9net/claude-python-skill) | remote | Python project scaffolding, quality standards (ruff, ty), and test runner |
 
-These skills follow the **SKILL.md open standard** (https://agentskills.io/), which is supported by:
-- Claude Code
-- Cursor
-- GitHub Copilot
-- Gemini CLI
-- And 10+ other AI coding tools
-
-## Version Control
-
-Skills are versioned using Git tags:
-- Check current version: `git describe --tags`
-- List available versions: `git tag -l`
+Plugins are registered in [`plugins.json`](plugins.json). Local plugins live in `plugins/`, remote plugins are referenced by GitHub repo.
 
 ## Contributing
 
-When updating skills:
-1. Make changes to SKILL.md files
-2. Test with Claude Code
-3. Commit changes
-4. Tag new version: `git tag -a v1.x.x -m "Description"`
-5. Push: `git push && git push --tags`
+To add a plugin:
+1. **Local**: create `plugins/<name>/SKILL.md` and add to `plugins.json`
+2. **Remote**: just add a `plugins.json` entry pointing to the GitHub repo
 
 ## License
-[Apache license 2.0](https://www.apache.org/licenses/LICENSE-2.0)
-
-
+[Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)

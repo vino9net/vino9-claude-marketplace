@@ -1,0 +1,28 @@
+{
+  "plugins": [
+    {
+      "name": "boot-gcp-vm",
+      "source": {
+        "type": "local",
+        "path": "plugins/boot-gcp-vm"
+      },
+      "description": "Start a GCP VM and update local SSH config with its new IP address"
+    },
+    {
+      "name": "github-issues",
+      "source": {
+        "type": "local",
+        "path": "plugins/github-issues"
+      },
+      "description": "Read and comment on GitHub issues in Claude Code Web (where gh CLI doesn't work)"
+    },
+    {
+      "name": "python-dev",
+      "source": {
+        "type": "github",
+        "repo": "vino9net/claude-python-skill"
+      },
+      "description": "Python project scaffolding, quality standards (ruff, ty), and test runner"
+    }
+  ]
+}

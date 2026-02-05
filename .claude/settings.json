@@ -5,9 +5,6 @@
       "WebFetch(domain:*)",
       "WebFetch(domain:github.com)",
       "WebFetch(domain:*.githubusercontent.com)",
-      "Bash(uv add:*)",
-      "Bash(uv sync:*)",
-      "Bash(uv tree:*)",
       "Bash(ls:*)",
       "Bash(cp:*)",
       "Bash(mv:*)",
@@ -21,13 +18,11 @@
       "Bash(git mv:*)",
       "Bash(git worktree:*)",
       "Bash(cat:*)",
-      "Read(/tmp/claude/*)",
+      "Read(/tmp/claude/*)"
     ],
     "ask": [
       "Bash(git commit:*)",
-      "Bash(git push:*)",
-      "Read(./.env)",
-      "Read(./.env.*)"
+      "Bash(git push:*)"
     ],
     "deny": [],
     "defaultMode": "acceptEdits"

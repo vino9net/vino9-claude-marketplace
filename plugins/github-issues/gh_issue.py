@@ -176,6 +176,16 @@ def format_issue(issue: dict[str, Any]) -> str:
 
 
 def main():
+    # This tool is only for Claude Code Web where gh CLI doesn't work
+    if os.environ.get("CLAUDE_CODE_REMOTE", "").lower() != "true":
+        print(
+            "This tool is only intended to be used in Claude Code Web remote environment.\n"
+            "Use gh CLI to read/write issue content instead:\n"
+            "  gh issue view <number>\n"
+            "  gh issue comment <number> -b <message>"
+        )
+        sys.exit(0)
+
     if len(sys.argv) < 2:
         print("Usage:", file=sys.stderr)
         print(
