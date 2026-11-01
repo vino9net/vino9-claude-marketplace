@@ -14,8 +14,8 @@ A collection of reusable plugins for AI coding tools.
 
 | Plugin | Source | Description |
 |--------|--------|-------------|
-| [boot-gcp-vm](plugins/boot-gcp-vm/) | local | Start a GCP VM and update local SSH config with its new IP address |
 | [github-issues](plugins/github-issues/) | local | Read and comment on GitHub issues in Claude Code Web (where gh CLI doesn't work) |
+| [my-workstation](https://github.com/sloppycoder/my-workstation) | remote | Provision AI dev workstations on AWS or GCP and manage their life cycle (supersedes boot-gcp-vm) |
 | [python-dev](https://github.com/vino9net/claude-python-skill) | remote | Python project scaffolding, quality standards (ruff, ty), and test runner |
 
 Plugins are registered in [`.claude-plugin/marketplace.json`](.claude-plugin/marketplace.json). Local plugins live in `plugins/`, remote plugins are referenced by GitHub repo.

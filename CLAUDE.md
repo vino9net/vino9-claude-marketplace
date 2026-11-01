@@ -15,15 +15,9 @@ A plugin marketplace of reusable Claude Code plugins following the **SKILL.md op
 ├── .claude-plugin/
 │   └── marketplace.json              # Marketplace catalog
 ├── plugins/
-│   ├── boot-gcp-vm/
-│   │   ├── .claude-plugin/
-│   │   │   └── plugin.json           # Plugin manifest
-│   │   └── skills/
-│   │       └── boot-gcp-vm/
-│   │           └── SKILL.md
 │   └── github-issues/
 │       ├── .claude-plugin/
-│       │   └── plugin.json
+│       │   └── plugin.json           # Plugin manifest
 │       └── skills/
 │           └── github-issues/
 │               ├── SKILL.md
@@ -73,14 +67,14 @@ Each local plugin has its own `.claude-plugin/plugin.json` that declares the plu
 
 ### Plugins
 
-**boot-gcp-vm** (local): Start GCP VMs and update SSH config
-- Start a Compute Engine VM and update `~/.ssh/config` with the new IP
-- Quick reference for listing, stopping, and connecting to VMs
-
 **github-issues** (local): Read and comment on GitHub issues in Claude Code Web
 - Only active when `CLAUDE_CODE_REMOTE=true` (set by Claude Code Web)
 - Works around the local git proxy that breaks `gh` CLI
 - Python script (stdlib only) calling GitHub API directly
+
+**my-workstation** (remote → `sloppycoder/my-workstation`): AI dev workstations on AWS or GCP
+- Provision workstations and manage their life cycle (seed snapshot, scratch disk, shelve, destroy)
+- Supersedes the former `boot-gcp-vm` plugin
 
 **python-dev** (remote → `vino9net/claude-python-skill`): Python project scaffolding, quality standards, and test runner
 - `/py:scaffold` — generate new Python projects with components (API, ORM, CLI)

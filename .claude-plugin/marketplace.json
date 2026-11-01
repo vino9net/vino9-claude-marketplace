@@ -1,22 +1,25 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "vino9-claude-marketplace",
-  "description": "Reusable Claude Code plugins: GCP VM management, GitHub Issues for Claude Code Web, and Python development",
-  "version": "1.0.0",
+  "description": "Reusable Claude Code plugins: AI dev workstation provisioning, GitHub Issues for Claude Code Web, and Python development",
+  "version": "1.1.0",
   "owner": {
     "name": "vino9net"
   },
   "license": "Apache-2.0",
   "plugins": [
     {
-      "name": "boot-gcp-vm",
-      "description": "Start a GCP VM and update local SSH config with its new IP address",
-      "source": "./plugins/boot-gcp-vm"
-    },
-    {
       "name": "github-issues",
       "description": "Read and comment on GitHub issues in Claude Code Web (where gh CLI doesn't work)",
       "source": "./plugins/github-issues"
+    },
+    {
+      "name": "my-workstation",
+      "description": "Provision AI dev workstations on AWS or GCP, and manage their life cycle (seed snapshot, scratch disk, shelve, destroy)",
+      "source": {
+        "source": "github",
+        "repo": "sloppycoder/my-workstation"
+      }
     },
     {
       "name": "python-dev",
